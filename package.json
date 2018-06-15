@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
-    "sequelize": "^4.37.10"
+    "pg": "^7.4.3",
+    "sequelize": "^4.37.10",
+    "sequelize-cli": "^4.0.0"
   }
 }

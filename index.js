@@ -1,10 +1,9 @@
-"use strict";
+'use strict';
+require('dotenv').config();
 const express = require('express');
-require('dotenv').config();
-const app = express();
+const cors = require('cors');
 const router = require('./src/router');
-require('dotenv').config();
-
+const app = express();
 const db = require('./src/models/index');
 
 /*db.sequelize.sync({force: false}).then(() => {
@@ -14,6 +13,9 @@ const db = require('./src/models/index');
   console.log(err);
 })*/
 
+app.use(cors());
 app.use('/', router);
+
 app.listen('3000');
 
+  

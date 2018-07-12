@@ -3,32 +3,32 @@
 const Controller = require('../core/Controller');
 const db = require('../models');
 
-class CandidateController extends Controller{
+class RecruiterController extends Controller{
     getAll(req, res, next){
-        db.Candidate.findAll(
+        db.Recruiter.findAll(
             {include: [ db.User ]
-        }).then((candidates) => {
-            res.status(200).send(candidates);
+        }).then((recruiters) => {
+            res.status(200).send(recruiters);
         });
     }
 
     getOne(req, res, next){
-        db.Candidate.findOne({
+        db.Recruiter.findOne({
             where: {
-                candidateId: req.params.idCandidate
+                recruiterId: req.params.idRecruiter
             },
-            include: [ db.User ]
-        }).then((candidate) => {
-            if(candidate){
-                res.status(200).send(candidate);
+            include: [ User ]
+        }).then((recruiter) => {
+            if(recruiter){
+                res.status(200).send(recruiter);
             }
-            res.status(400).send(candidate);
+            res.status(400);
         }).catch(err => {
             console.log(err);
         });
     }
     
-    async addCandidate(req, res, next){
+    async addRecruiter(req, res, next){
         const isUserExist = await this.findUserByMail(req.query.mail);
         if(isUserExist){
             return next(res.status(409).send({
@@ -38,9 +38,9 @@ class CandidateController extends Controller{
             }));
         }
 
-        let candidate = await db.Candidate.create({
+        let recruiter = await db.Recruiter.create({
             cv: req.query.cv
-        })
+        });
 
         let user = await db.User.create({
             lastname: req.query.lastname,
@@ -48,11 +48,11 @@ class CandidateController extends Controller{
             password: req.query.password,
             mail: req.query.mail,
             phone: req.query.phone,
-            CandidateCandidateId: candidate.candidateId
+            RecruiterRecruiterId: recruiter.recruiterId
         });
 
         return next(res.send(user));
     }
 }
 
-module.exports = new CandidateController(db);
+module.exports = new RecruiterController(db);

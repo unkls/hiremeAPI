@@ -4,7 +4,6 @@ const db = require('../models');
 class UserController extends Controller{
     getAll(req, res, next){
         db.User.findAll().then((users) => {
-            console.log(users);
             res.send(users);
         });
     }
@@ -20,6 +19,17 @@ class UserController extends Controller{
                 res.send(user);
             }
             res.status(400);
+        });
+    }
+
+    findUserByMail(mail){
+        return db.User.findOne({
+            where: {
+                mail: mail
+            },
+            plain: true
+        }).then((user) =>{
+            return user;
         });
     }
 }

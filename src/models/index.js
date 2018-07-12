@@ -1,5 +1,4 @@
 'use strict';
-
 const fs        = require('fs');
 const path      = require('path');
 const Sequelize = require('sequelize');
@@ -7,8 +6,8 @@ const basename  = path.basename(__filename);
 const env       = process.env.NODE_ENV || 'development';
 const config    = require(__dirname + '/../config/config.js')[env];
 const db        = {};
+let sequelize = {};
 
-var sequelize = {};
 if (config.use_env_variable) {
      sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
@@ -23,6 +22,7 @@ if (config.use_env_variable) {
         }
     });
 }
+
 //Lire les fichiers dans models
 fs
   .readdirSync(__dirname)
@@ -50,5 +50,4 @@ db.syncAll = (isForce) => {
         }
     })
 }
-
 module.exports = db;

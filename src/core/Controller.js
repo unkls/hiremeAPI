@@ -5,6 +5,17 @@ class Controller{
         this.model = model;
     }
 
+    findUserByMail(mail){
+        return this.model.User.findOne({
+            where: {
+                mail: mail
+            },
+            plain: true
+        }).then((user) =>{
+            return user;
+        });
+    }
+
     /*getAll(req, res, next){
         this.model.findAll().then((candidates) => {
             res.send(candidates);

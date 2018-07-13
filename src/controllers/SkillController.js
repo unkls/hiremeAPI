@@ -18,9 +18,13 @@ class SkillController extends Controller{
             }
         }).then((skill) => {
             if(skill){
-                res.status(200).send(skill);
+                return res.status(200).send(skill);
             }
-            res.status(400);
+            return res.status(400).send({
+                statusCode: 400,
+                error: "Bad Request",
+                message: `Can't find Skill with id ${req.params.idSkill}`
+            });
         });
     }
 

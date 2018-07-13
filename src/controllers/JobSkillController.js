@@ -18,9 +18,9 @@ class JobController extends Controller{
             }
         }).then((job) => {
             if(job){
-                res.status(200).send(job);
+                return res.status(200).send(job);
             }
-            res.status(400);
+            return res.status(400);
         });
     }
 

@@ -20,9 +20,13 @@ class CandidateController extends Controller{
             include: [ db.User ]
         }).then((candidate) => {
             if(candidate){
-                res.status(200).send(candidate);
+                return res.status(200).send(candidate);
             }
-            res.status(400).send(candidate);
+            return res.status(400).send({
+                statusCode: 400,
+                error: "Bad Request",
+                message: `Can't find Candidate with id ${req.params.idCandidate}`
+            });
         }).catch(err => {
             console.log(err);
         });

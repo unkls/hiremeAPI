@@ -18,7 +18,7 @@ const Job = sequelize.define("Job", {
   Job.associate = (models) => {
     models.Job.belongsToMany(models.Skill, {through: "JobSkill"});
     models.Job.belongsToMany(models.Candidate, {through: "CandidateJob"});
-    models.Job.belongsToMany(models.Recruiter, {through: "RecruiterJob"});
+    models.Job.belongsTo(models.Recruiter);
   };
   
   return Job;

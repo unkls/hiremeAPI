@@ -17,7 +17,7 @@ class RecruiterController extends Controller{
             where: {
                 recruiterId: req.params.idRecruiter
             },
-            include: [ User ]
+            include: [ db.User ]
         }).then((recruiter) => {
             if(recruiter){
                 res.status(200).send(recruiter);
@@ -48,10 +48,59 @@ class RecruiterController extends Controller{
             password: req.query.password,
             mail: req.query.mail,
             phone: req.query.phone,
+            description: req.query.description,
             RecruiterRecruiterId: recruiter.recruiterId
         });
 
         return next(res.send(user));
+    }
+
+    findRecruiterById(id){
+        return db.Recruiter.findOne({
+            where: {
+                recruiterId: id
+            },
+            plain: true
+        }).then((recruiter) =>{
+            return recruiter;
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
+    async addRecruiterJob(req, res, next){
+        const recruiter = await this.findRecruiterById(req.params.idRecruiter);
+        if(!recruiter){
+            return res.status(400).send({
+                statusCode: 400,
+                error: "Bad Request",
+                message: `Can't find recruiter with id ${req.params.idRecruiter}`
+            });
+        }
+        return db.Job.create({
+            jobName: req.query.jobName,
+            jobDescription: req.query.jobDescription,
+            RecruiterRecruiterId: req.params.idRecruiter
+        }).then(job => {
+            return res.send(job);
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
+    getRecruiterJobs(req, res, next){
+        db.Job.findAll({
+            where: {
+                RecruiterRecruiterId: req.params.idRecruiter
+            }
+        }).then((recruiterJobs) => {
+            if(recruiterJobs){
+                res.status(200).send(recruiterJobs);
+            }
+            res.status(400);
+        }).catch(err => {
+            console.log(err);
+        });
     }
 }
 

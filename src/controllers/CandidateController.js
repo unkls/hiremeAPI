@@ -31,11 +31,11 @@ class CandidateController extends Controller{
     async addCandidate(req, res, next){
         const isUserExist = await this.findUserByMail(req.query.mail);
         if(isUserExist){
-            return next(res.status(409).send({
+            return res.status(409).send({
                 statusCode: 409,
                 error: "Conflict",
                 message: `User with mail ${req.query.mail} already exist`
-            }));
+            });
         }
 
         let candidate = await db.Candidate.create({
@@ -48,10 +48,11 @@ class CandidateController extends Controller{
             password: req.query.password,
             mail: req.query.mail,
             phone: req.query.phone,
+            description: req.query.description,
             CandidateCandidateId: candidate.candidateId
         });
 
-        return next(res.send(user));
+        return res.send(user);
     }
 }
 

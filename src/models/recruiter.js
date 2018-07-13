@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Recruiter.associate = (models) => {
     models.Recruiter.hasOne(models.User);
-    models.Recruiter.belongsToMany(models.Job, {through: "RecruiterJob"});
   };
 
   return Recruiter;

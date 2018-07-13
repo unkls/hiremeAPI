@@ -7,9 +7,6 @@ const Skill = sequelize.define("Skill", {
         primaryKey: true,
         autoIncrement: true
     },
-    skillId: {
-        type: DataTypes.UUID
-    },
     skillName: {
         type: DataTypes.STRING
     }
